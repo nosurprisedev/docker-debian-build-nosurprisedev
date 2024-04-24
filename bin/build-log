@@ -19,10 +19,10 @@ echo '--------------------'
 rm -rf tmp
 
 mkdir -p tmp/bin
-# cp bin/build-image tmp/bin
-# cp bin/set-variables tmp/bin
-# cp bin/replace-string-in-file tmp/bin
-# cp bin/replace-string-in-dir-recursive tmp/bin
+cp bin/build-image tmp/bin
+cp bin/set-variables tmp/bin
+cp bin/replace-string-in-file tmp/bin
+cp bin/replace-string-in-dir-recursive tmp/bin
 
 # bin/update-set-variables "$ABBREV" "$CODE_NAME" "$DISTRO" "$OWNER"
 # bin/setup-build-dir
