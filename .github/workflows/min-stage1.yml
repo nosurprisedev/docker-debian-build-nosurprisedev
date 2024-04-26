@@ -23,13 +23,13 @@ jobs:
       - name: Build the Docker image
         run: bash min-stage1-$SUITE.sh
 
-#      - name: Log in to the Docker container registry
-#        uses: docker/login-action@v3
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Log in to the Docker container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
 #      - name: Publish the Docker image
 #        run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
