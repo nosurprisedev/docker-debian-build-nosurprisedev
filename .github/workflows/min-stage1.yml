@@ -47,6 +47,6 @@ jobs:
 #          token: ${{ secrets.SPECIAL_TOKEN }}
 #        if: ${{ github.ref == 'refs/heads/main' }}
 
-#      - name: Log out of the Docker container registry
-#        run: docker logout ghcr.io
-#        if: ${{ github.ref == 'refs/heads/main' }}
+      - name: Log out of the Docker container registry
+        run: docker logout ghcr.io
+        if: ${{ github.ref == 'refs/heads/main' }}
