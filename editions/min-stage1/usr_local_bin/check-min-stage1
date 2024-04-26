@@ -1,0 +1,41 @@
+#!/bin/bash
+
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+
+echo '###########################'
+echo "BEGIN $ABBREV sanity checks"
+echo '###########################'
+
+echo '-------------------'
+echo 'cat /etc/os-release'
+cat /etc/os-release
+
+echo '--------------------------------'
+echo 'cat /home/`whoami`/login-times.txt'
+cat /home/`whoami`/login-times.txt
+
+echo '------'
+echo 'whoami'
+whoami
+
+echo '-----------'
+echo 'sudo whoami'
+sudo whoami
+
+echo '--------------'
+echo 'sudo --version'
+sudo --version
+
+echo '--------------'
+echo 'nano --version'
+nano --version
+
+echo '-------------'
+echo 'git --version'
+git --version
+
+echo '##############################'
+echo "FINISHED $ABBREV sanity checks"
+echo '##############################'

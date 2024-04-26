@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -eo pipefail
+
+cd tmp && source bin/set-variables
+
+echo "Build directory: $DIR_BUILD"
+mkdir -p "$DIR_BUILD"
+
+DIR_EDITION="$DIR_ROOT/editions/$ABBREV"
+echo ''
+echo "cp -R $DIR_EDITION/. $DIR_BUILD"
+cp -R "$DIR_EDITION/." "$DIR_BUILD"
+wait
+echo ''
+echo "cp -R $DIR_ROOT/tmp/bin $DIR_BUILD"
+echo ''
+cp -R "$DIR_ROOT/tmp/bin" "$DIR_BUILD"
+wait
+
+echo ''
+echo 'pwd:'
+pwd
+echo ''
+
+update-build-files () {
+  STRING1="$1"
+  STRING2="$2"
+  wait
+  echo "Replacing instances of $STRING1 with $STRING2"
+  echo "in $DIR_BUILD"
+  echo ''
+  bin/replace-string-in-dir-recursive "$STRING1" "$STRING2" "$DIR_BUILD"
+  wait
+}
+
+update-build-files '<ABBREV>' "$ABBREV"
+update-build-files '<CODE_NAME>' "$CODE_NAME"
+update-build-files '<OWNER>' "$OWNER"
+update-build-files '<DISTRO>' "$DISTRO"
+update-build-files '<DIR_ROOT>' "$DIR_ROOT"
+update-build-files '<REGULAR_USER>' "$REGULAR_USER"
+update-build-files '<TIME_STAMP>' "$TIME_STAMP"
+wait
