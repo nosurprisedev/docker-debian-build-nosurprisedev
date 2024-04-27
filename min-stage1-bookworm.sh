@@ -4,8 +4,8 @@ set -eo pipefail
 
 ABBREV='min-stage1'
 CODE_NAME='bookworm'
-DISTRO='debian'
-OWNER='no-surprise-dev'
+DISTRO=`cat params/distro.txt`
+OWNER=`cat params/owner.txt`
 
 rm -rf tmp
 

@@ -7,9 +7,9 @@ source bin/set-variables
 echo '##############################################'
 echo "BEGIN: Creating the Docker image $DOCKER_IMAGE"
 echo '##############################################'
-
+wait
 cd "$DIR_BUILD" && docker build -t $DOCKER_IMAGE .
-
+wait
 echo '#################################################'
 echo "FINISHED: Creating the Docker image $DOCKER_IMAGE"
 echo '#################################################'
