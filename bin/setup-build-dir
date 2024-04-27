@@ -18,11 +18,6 @@ echo ''
 cp -R "$DIR_ROOT/tmp/bin" "$DIR_BUILD"
 wait
 
-echo ''
-echo 'pwd:'
-pwd
-echo ''
-
 update-build-files () {
   STRING1="$1"
   STRING2="$2"
