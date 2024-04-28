@@ -35,12 +35,12 @@ jobs:
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
         # if: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Delete containers older than an hour
+      - name: Delete containers older than a minute
         uses: snok/container-retention-policy@v2
         with:
           # image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
           image-names: image-debian-$CODE_NAME-min-stage1
-          cut-off: An hour ago UTC
+          cut-off: A minute ago UTC
           account-type: org
           org-name: nosurprisedev
           keep-at-least: 2
