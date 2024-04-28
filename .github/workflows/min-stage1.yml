@@ -38,7 +38,7 @@ jobs:
       - name: Delete old containers
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-debian-*-min-stage1
+          image-names: image-debian-$CODE_NAME-min-stage1
           cut-off: A week ago UTC
           account-type: org
           org-name: rubyonracetracks
