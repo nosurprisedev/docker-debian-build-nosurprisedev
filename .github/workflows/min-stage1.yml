@@ -29,24 +29,23 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Publish the Docker image
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Delete containers older than a minute
+      - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          # image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
-          image-names: 'image-debian-'+os.environ['CODE_NAME']+'-min-stage1'
-          cut-off: A minute ago UTC
+          image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
+          cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
           keep-at-least: 2
           token: ${{ secrets.SPECIAL_TOKEN }}
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
-        # if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' }}
