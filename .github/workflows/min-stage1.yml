@@ -35,12 +35,14 @@ jobs:
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
         # if: ${{ github.ref == 'refs/heads/main' }}
 
-      - name: Delete old containers
-        uses: actions/delete-package-versions@v5
-        with: 
-          package-name: "image-docker-debian-$CODE_NAME-min-stage1"
-          package-type: 'docker'
-          min-versions-to-keep: 3
+      - name: Delete containers older than a week
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-docker-debian-bookworm-min-stage1, image-docker-debian-trixie-min-stage1, image-docker-debian-sid-min-stage1
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
           token: ${{ secrets.SPECIAL_TOKEN }}
         # if: ${{ github.ref == 'refs/heads/main' }}
 
