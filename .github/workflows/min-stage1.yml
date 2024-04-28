@@ -38,7 +38,7 @@ jobs:
       - name: Delete containers older than an hour
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-docker-debian-bookworm-min-stage1, image-docker-debian-trixie-min-stage1, image-docker-debian-sid-min-stage1
+          image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
           cut-off: An hour ago UTC
           account-type: org
           org-name: nosurprisedev
