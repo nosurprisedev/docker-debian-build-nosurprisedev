@@ -41,6 +41,7 @@ jobs:
           package-name: "image-docker-debian-$CODE_NAME-min-stage1"
           package-type: 'docker'
           min-versions-to-keep: 3
+          token: ${{ secrets.SPECIAL_TOKEN }}
         # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Log out of the Docker container registry
