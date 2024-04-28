@@ -29,11 +29,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ github.ref == 'refs/heads/main' }}
+        # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Publish the Docker image
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
-        if: ${{ github.ref == 'refs/heads/main' }}
+        # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Delete old containers
         uses: snok/container-retention-policy@v2
@@ -45,8 +45,8 @@ jobs:
           keep-at-least: 2
           untagged-only: true
           token: ${{ secrets.SPECIAL_TOKEN }}
-        if: ${{ github.ref == 'refs/heads/main' }}
+        # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
-        if: ${{ github.ref == 'refs/heads/main' }}
+        # if: ${{ github.ref == 'refs/heads/main' }}
