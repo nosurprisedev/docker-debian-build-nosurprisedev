@@ -12,16 +12,16 @@ jobs:
 
     strategy:
       matrix:
-        CODE_NAME: ['bookworm', 'trixie', 'sid']
+        MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
 
     env:
-      SUITE: ${{ matrix.CODE_NAME }}
+      CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the Docker image
-        run: bash min-stage1-$SUITE.sh
+        run: bash min-stage1-$CODE_NAME.sh
 
       - name: Log in to the Docker container registry
         uses: docker/login-action@v3
