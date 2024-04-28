@@ -36,15 +36,11 @@ jobs:
         # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Delete old containers
-        uses: snok/container-retention-policy@v2
-        with:
-          image-names: ${{ image-debian-$CODE_NAME-min-stage1 }}
-          cut-off: A week ago UTC
-          account-type: org
-          org-name: rubyonracetracks
-          keep-at-least: 2
-          untagged-only: true
-          token: ${{ secrets.SPECIAL_TOKEN }}
+        uses: actions/delete-package-versions@v5
+        with: 
+          package-name: "image-docker-debian-$CODE_NAME-min-stage1"
+          package-type: 'docker'
+          min-versions-to-keep: 3
         # if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Log out of the Docker container registry
