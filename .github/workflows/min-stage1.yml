@@ -39,7 +39,7 @@ jobs:
         uses: snok/container-retention-policy@v2
         with:
           # image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
-          image-names: image-debian-${{ CODE_NAME }}-min-stage1
+          image-names: image-debian-os.environ["CODE_NAME"]-min-stage1
           cut-off: A minute ago UTC
           account-type: org
           org-name: nosurprisedev
