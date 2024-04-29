@@ -4,17 +4,33 @@ set -eo pipefail
 
 ABBREV="$1"
 CODE_NAME="$2"
-DISTRO="$3"
-OWNER="$4"
 
-TIME_STAMP_LOG=`date +%Y_%m%d_%H%M_%S`
+echo '--------------------'
+echo 'BEGIN: initial setup'
+echo '--------------------'
+
+rm -rf tmp
+mkdir -p tmp/params
+echo "$ABBREV" > tmp/params/abbrev.txt
+echo "$CODE_NAME" > tmp/params/code_name.txt
+TIME_STAMP=`date +%Y_%m%d_%H%M_%S`
+echo "$TIME_STAMP" > tmp/params/time_stamp.txt
 DIR_LOG="log/$ABBREV/$CODE_NAME"
 mkdir -p "$DIR_LOG"
-LOG_FILE="$DIR_LOG/$TIME_STAMP_LOG.txt"
+LOG_FILE="$DIR_LOG/$TIME_STAMP.txt"
 echo "Log file: $LOG_FILE"
 
+cp -R bin/. tmp/bin
+
+bin/update-set-variables "$ABBREV" "$CODE_NAME" "$DISTRO" "$OWNER"
+bin/setup-build-dir
+
+echo '-----------------------'
+echo 'FINISHED: initial setup'
+echo '-----------------------'
+
 mkdir -p log
-bin/build-log "$ABBREV" "$CODE_NAME" "$DISTRO" "$OWNER" 2>&1 | tee "$LOG_FILE"
+bin/build-log 2>&1 | tee "$LOG_FILE"
 
 echo 'The build process is complete.'
 echo "The full log file is at $LOG_FILE."

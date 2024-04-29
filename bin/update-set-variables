@@ -2,13 +2,10 @@
 
 set -eo pipefail
 
-ABBREV="$1"
-CODE_NAME="$2"
-DISTRO="$3"
-OWNER="$4"
+ABBREV=`cat tmp/params/abbrev.txt`
+CODE_NAME=`cat tmp/params/code_name.txt`
+TIME_STAMP=`cat tmp/params/time_stamp.txt`
 DIR_ROOT=`pwd`
-REGULAR_USER='winner'
-TIME_STAMP=`date +%Y_%m%d_%H%M_%S`
 
 update-bin-set-variables () {
   STRING1="$1"
@@ -18,8 +15,5 @@ update-bin-set-variables () {
 
 update-bin-set-variables '<ABBREV>' "$ABBREV"
 update-bin-set-variables '<CODE_NAME>' "$CODE_NAME"
-update-bin-set-variables '<OWNER>' "$OWNER"
-update-bin-set-variables '<DISTRO>' "$DISTRO"
 update-bin-set-variables '<DIR_ROOT>' "$DIR_ROOT"
-update-bin-set-variables '<REGULAR_USER>' "$REGULAR_USER"
 update-bin-set-variables '<TIME_STAMP>' "$TIME_STAMP"
