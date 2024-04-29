@@ -2,34 +2,5 @@
 
 set -eo pipefail
 
-ABBREV="$1"
-CODE_NAME="$2"
-DISTRO="$3"
-OWNER="$4"
-
-echo ''
-echo "Edition: $ABBREV"
-echo "Debian Code Name: $CODE_NAME"
-echo "Distro: $DISTRO"
-echo "Owner: $OWNER"
-
-echo '--------------------'
-echo 'BEGIN: initial setup'
-echo '--------------------'
-rm -rf tmp
-
-mkdir -p tmp/bin
-cp bin/build-image tmp/bin
-cp bin/set-variables tmp/bin
-cp bin/replace-string-in-file tmp/bin
-cp bin/replace-string-in-dir-recursive tmp/bin
-
-bin/update-set-variables "$ABBREV" "$CODE_NAME" "$DISTRO" "$OWNER"
-bin/setup-build-dir
-
-echo '-----------------------'
-echo 'FINISHED: initial setup'
-echo '-----------------------'
-
 source tmp/bin/set-variables
 cd "$DIR_BUILD" && bin/build-image
