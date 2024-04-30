@@ -29,11 +29,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Publish the Docker image
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
@@ -44,8 +44,8 @@ jobs:
           org-name: nosurprisedev
           keep-at-least: 2
           token: ${{ secrets.SPECIAL_TOKEN }}
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
