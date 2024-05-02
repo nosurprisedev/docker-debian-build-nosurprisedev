@@ -16,12 +16,13 @@ jobs:
 
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
+      ABBREV_CI: min-stage1
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the Docker image
-        run: bash min-stage1-$CODE_NAME.sh
+        run: bash $ABBREV_CI-$CODE_NAME.sh
 
       - name: Log in to the Docker container registry
         uses: docker/login-action@v3
