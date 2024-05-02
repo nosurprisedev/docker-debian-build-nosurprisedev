@@ -3,4 +3,4 @@
 set -eo pipefail
 
 source tmp/bin/set-variables
-cd "$DIR_BUILD" && bin/build-image
+cd "$DIR_BUILD" && bin/docker-build
