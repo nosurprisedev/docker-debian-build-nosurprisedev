@@ -16,12 +16,14 @@ jobs:
 
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
+      ABBREV_CI: 'min-stage1'
+      OWNER_CI: 'nosurprisedev'
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the Docker image
-        run: bash min-stage1-$CODE_NAME.sh
+        run: bash $ABBREV_CI-$CODE_NAME.sh
 
       - name: Log in to the Docker container registry
         uses: docker/login-action@v3
@@ -29,11 +31,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == "$OWNER_CI") }}
 
       - name: Publish the Docker image
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
-        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == "$OWNER_CI") }}
 
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
@@ -41,11 +43,11 @@ jobs:
           image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
           cut-off: A day ago UTC
           account-type: org
-          org-name: nosurprisedev
+          org-name: "$OWNER_CI"
           keep-at-least: 2
           token: ${{ secrets.SPECIAL_TOKEN }}
-        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == "$OWNER_CI") }}
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
-        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == "$OWNER_CI") }}
