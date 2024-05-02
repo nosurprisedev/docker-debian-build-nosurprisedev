@@ -22,9 +22,6 @@ update-build-files () {
   STRING1="$1"
   STRING2="$2"
   wait
-  echo "Replacing instances of $STRING1 with $STRING2"
-  echo "in $DIR_BUILD"
-  echo ''
   bin/replace-string-in-dir-recursive "$STRING1" "$STRING2" "$DIR_BUILD"
   wait
 }
