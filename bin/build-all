@@ -22,7 +22,7 @@ echo "Log file: $LOG_FILE"
 
 cp -R bin/. tmp/bin
 
-bin/update-set-variables "$ABBREV" "$CODE_NAME" "$DISTRO" "$OWNER"
+bin/update-set-variables
 bin/setup-build-dir
 
 echo '-----------------------'
