@@ -16,8 +16,8 @@ jobs:
 
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
-      ABBREV_CI: 'min-stage1'
-      OWNER_CI: 'nosurprisedev'
+      ABBREV_CI: min-stage1
+      OWNER_CI: nosurprisedev
 
     steps:
       - uses: actions/checkout@v4
