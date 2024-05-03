@@ -14,9 +14,11 @@ jobs:
       matrix:
         MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
 
+    # GH_TOKEN is needed for using GitHub CLI in a GitHub Actions workflow
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
+      GH_TOKEN: ${{ github.token }}
 
     steps:
       - uses: actions/checkout@v4
