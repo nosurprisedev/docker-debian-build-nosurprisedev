@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
+        MATRIX_CODE_NAME: ['trixie']
 
     # The name of the Docker image to be pushed must be set here.
     # Relying on the tmp/bin/set-variables script caused the wrong images
