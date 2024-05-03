@@ -7,6 +7,8 @@ source tmp/bin/set-variables
 # NOTE: This script is strictly for GitHub Workflows.
 # It is used for deleting older Docker images from the repository.
 
+echo "Owner: $OWNER"
+
 gh api \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
