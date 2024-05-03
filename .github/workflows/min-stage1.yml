@@ -18,7 +18,6 @@ jobs:
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
-      GH_TOKEN: ${{ github.token }}
 
     steps:
       - uses: actions/checkout@v4
@@ -49,9 +48,20 @@ jobs:
           # token: ${{ secrets.SPECIAL_TOKEN }}
         # if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
+      # - name: Delete old Docker images from registry
+        # run: bin/gh-delete-images
+        # if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
       - name: Delete old Docker images from registry
-        run: bin/gh-delete-images
-        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+        uses: bots-house/ghcr-delete-image-action@v1.1.0
+        with:
+          # NOTE: at now only orgs is supported
+          owner: nosurprisedev
+          name: image-debian-$CODE_NAME-$CI_ABBREV
+          # NOTE: using Personal Access Token
+          token: ${{ secrets.SPECIAL_TOKEN }}
+          # Keep latest N untagged images
+          untagged-keep-latest: 3
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
