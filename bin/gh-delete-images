@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -eo pipefail
+
+source bin/set-variables
+
+# NOTE: This script is strictly for GitHub Workflows.
+# It is used for deleting older Docker images from the repository.
+
+gh api \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /orgs/$OWNER/packages?package_type=container
