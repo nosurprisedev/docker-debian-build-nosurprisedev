@@ -37,7 +37,7 @@ jobs:
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Publish the Docker image
-        run: docker push $DOCKER_IMAGE_CI:latest
+        run: echo "$DOCKER_IMAGE_CI" && docker push $DOCKER_IMAGE_CI:latest
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       # The next three jobs remove old instances of Docker images in the Docker image registry.
