@@ -14,15 +14,19 @@ jobs:
       matrix:
         MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
 
+    # The name of the Docker image to be pushed must be set here.
+    # Relying on the tmp/bin/set-variables script caused the wrong images
+    # to be pushed during certain builds.
     env:
-      CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
+      CODE_NAME_CI: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
+      DOCKER_IMAGE_CI: image-debian-$CODE_NAME_CI-$ABBREV_CI
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Build the Docker image
-        run: bash $ABBREV_CI-$CODE_NAME.sh
+        run: bash $ABBREV_CI-$CODE_NAME_CI.sh
 
       - name: Log in to the Docker container registry
         uses: docker/login-action@v3
@@ -33,7 +37,7 @@ jobs:
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Publish the Docker image
-        run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
+        run: docker push $DOCKER_IMAGE_CI:latest
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       # The next three jobs remove old instances of Docker images in the Docker image registry.
