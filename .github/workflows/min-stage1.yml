@@ -47,7 +47,7 @@ jobs:
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-debian-$CODE_NAME_CI-$ABBREV_CI
+          image-names: 'image-debian-' + os.environ["CODE_NAME_CI"] + '-' + os.environ["ABBREV_CI"]
           cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
