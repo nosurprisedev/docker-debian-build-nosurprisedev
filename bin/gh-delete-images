@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-source bin/set-variables
+source tmp/bin/set-variables
 
 # NOTE: This script is strictly for GitHub Workflows.
 # It is used for deleting older Docker images from the repository.
