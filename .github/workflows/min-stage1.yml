@@ -14,7 +14,6 @@ jobs:
       matrix:
         MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
 
-    # GH_TOKEN is needed for using GitHub CLI in a GitHub Actions workflow
     env:
       CODE_NAME: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
@@ -37,31 +36,45 @@ jobs:
         run: source tmp/bin/set-variables && docker push $DOCKER_IMAGE:latest
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
-      # - name: Delete containers older than a day, keep at least 2
-        # uses: snok/container-retention-policy@v2
-        # with:
-          # image-names: image-debian-bookworm-min-stage1, image-debian-trixie-min-stage1, image-debian-sid-min-stage1
-          # cut-off: A day ago UTC
-          # account-type: org
-          # org-name: nosurprisedev
-          # keep-at-least: 2
-          # token: ${{ secrets.SPECIAL_TOKEN }}
-        # if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+      # The next three jobs remove old instances of Docker images in the Docker image registry.
+      # Until I figure out how to get snok/container-retention-policy to recognize the
+      # environment variables set here, I must use three separate jobs.
 
-      # - name: Delete old Docker images from registry
-        # run: bin/gh-delete-images
-        # if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
-
-      - name: Delete old Docker images from registry
-        uses: bots-house/ghcr-delete-image-action@v1.1.0
+      # Delete old instances of image-debian-bookworm-min-stage1
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
         with:
-          # NOTE: at now only orgs is supported
-          owner: nosurprisedev
-          name: image-debian-$CODE_NAME-$CI_ABBREV
-          # NOTE: using Personal Access Token
+          image-names: image-debian-bookworm-min-stage1
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
           token: ${{ secrets.SPECIAL_TOKEN }}
-          # Keep latest N untagged images
-          untagged-keep-latest: 3
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # Delete old instances of image-debian-trixie-min-stage1
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-debian-trixie-min-stage1
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # Delete old instances of image-debian-sid-min-stage1
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-debian-sid-min-stage1
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Log out of the Docker container registry
         run: docker logout ghcr.io
