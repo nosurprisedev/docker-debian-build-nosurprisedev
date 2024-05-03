@@ -20,7 +20,6 @@ jobs:
     env:
       CODE_NAME_CI: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
-      DOCKER_IMAGE_CI: image-debian-${{ CODE_NAME_CI }}-${{ ABBREV_CI }}
 
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +36,7 @@ jobs:
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Publish the Docker image
-        run: echo "$DOCKER_IMAGE_CI" && docker push $DOCKER_IMAGE_CI:latest
+        run: docker push image-debian-$CODE_NAME_CI-$ABBREV_CI:latest
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       # The next three jobs remove old instances of Docker images in the Docker image registry.
