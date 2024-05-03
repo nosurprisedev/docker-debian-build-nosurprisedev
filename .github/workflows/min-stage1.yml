@@ -43,11 +43,11 @@ jobs:
       # Until I figure out how to get snok/container-retention-policy to recognize the
       # environment variables set here, I must use three separate jobs.
 
-      # Delete old instances of image-debian-bookworm-min-stage1
+      # Delete old instances of image just built
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          image-names: "image-debian-$CODE_NAME_CI-$ABBREV_CI"
+          image-names: image-debian-${{ CODE_NAME_CI }}-${{ ABBREV_CI }}
           cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
