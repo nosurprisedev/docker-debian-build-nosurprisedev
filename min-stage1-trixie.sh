@@ -2,4 +2,4 @@
 
 set -eo pipefail
 
-bin/build-all 'min-stage1' 'sid'
+bin/build-all 'min-stage1' 'trixie'
