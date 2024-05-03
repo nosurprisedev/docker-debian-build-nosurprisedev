@@ -47,6 +47,18 @@ jobs:
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
+          image-names: image-debian-$CODE_NAME_CI-$ABBREV_CI
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # Delete old instances of image-debian-bookworm-min-stage1
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
           image-names: image-debian-bookworm-min-stage1
           cut-off: A day ago UTC
           account-type: org
