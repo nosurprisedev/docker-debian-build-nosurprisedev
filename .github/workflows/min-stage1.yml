@@ -36,7 +36,7 @@ jobs:
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       - name: Publish the Docker image
-        run: docker push image-debian-$CODE_NAME_CI-$ABBREV_CI:latest
+        run: docker push ghcr.io/nosurprisedev/image-debian-$CODE_NAME_CI-$ABBREV_CI:latest
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
       # The next three jobs remove old instances of Docker images in the Docker image registry.
