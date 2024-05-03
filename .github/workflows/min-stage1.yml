@@ -20,7 +20,7 @@ jobs:
     env:
       CODE_NAME_CI: ${{ matrix.MATRIX_CODE_NAME }}
       ABBREV_CI: min-stage1
-      DOCKER_IMAGE_CI: image-debian-$CODE_NAME_CI-$ABBREV_CI
+      DOCKER_IMAGE_CI: image-debian-${{ CODE_NAME_CI }}-${{ ABBREV_CI }}
 
     steps:
       - uses: actions/checkout@v4
