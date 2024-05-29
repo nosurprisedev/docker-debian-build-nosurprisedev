@@ -1,4 +1,4 @@
-name: Build-min_stage1
+name: Build-min_stage2
 
 on:
   pull_request:
