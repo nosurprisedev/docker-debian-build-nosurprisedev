@@ -133,7 +133,7 @@ apt-get install -y libsqlite3-dev # Needed for sqlite3 gem
 apt-get install -y redis-server # Some Rails apps use Redis
 apt-get install -y graphviz # Needed for railroady and rails-erd gems
 apt-get install -y imagemagick # Needed for image parameters in Rails projects
-apt-get install -y libgtk-3-0 libgtkmm-3.0-dev libnotify-dev # Needed for the Rails server
+apt-get install -y libgtk-3-bin libgtkmm-3.0-dev libnotify-dev # Needed for the Rails server
 apt-get install -y libcurl4-openssl-dev libxml2-dev # Needed for the fog gem
 
 # Install Ansible and UTF8
