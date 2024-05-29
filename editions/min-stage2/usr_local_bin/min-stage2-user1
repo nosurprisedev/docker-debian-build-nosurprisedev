@@ -1,0 +1,33 @@
+#!/bin/bash
+
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+
+echo '###########################'
+echo "BEGIN $ABBREV-user1 actions"
+echo '###########################'
+
+echo '+++++++++++++++++++++'
+echo 'BEGIN: installing NVM'
+echo '+++++++++++++++++++++'
+
+echo '-------------------------------------------------------------------'
+echo "git clone https://github.com/creationix/nvm.git /home/`whoami`/.nvm"
+git clone https://github.com/creationix/nvm.git /home/`whoami`/.nvm
+
+echo '-----------------------------------------'
+echo "cd /home/`whoami`/.nvm && bash install.sh"
+cd /home/`whoami`/.nvm && bash install.sh
+
+echo '----'
+echo 'wait'
+wait
+
+echo '++++++++++++++++++++++++'
+echo 'FINISHED: installing NVM'
+echo '++++++++++++++++++++++++'
+
+echo '##############################'
+echo "FINISHED $ABBREV-user1 actions"
+echo '##############################'

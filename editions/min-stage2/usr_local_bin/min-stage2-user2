@@ -1,0 +1,78 @@
+#!/bin/bash
+
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+
+echo '###########################'
+echo "BEGIN $ABBREV-user2 actions"
+echo '###########################'
+
+# BEGIN: activate NVM
+export NVM_DIR="/home/`whoami`/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# END: activate NVM
+
+# BEGIN: activate NVM at startup
+echo 'export NVM_DIR="/home/`whoami`/.nvm"' >> /home/`whoami`/.bashrc
+echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"' >> /home/`whoami`/.bashrc
+# END: activate NVM at startup
+
+echo '--------------'
+echo 'command -v nvm'
+command -v nvm
+
+echo '-------------'
+echo 'nvm --version'
+nvm --version
+
+# BEGIN: install Node
+echo '-----------------'
+echo 'nvm install --lts'
+nvm install --lts
+# END: install Node
+
+# BEGIN: activate Node at startup
+# The commands to activate NVM at startup were automatically added during installation.
+echo 'nvm use node' >> /home/`whoami`/.bashrc
+# END: activate Node at startup
+
+echo '-------'
+echo 'node -v'
+node -v
+
+echo '-----------'
+echo 'npm version'
+npm version
+
+echo '+++++++++++++++++++++'
+echo 'BEGIN installing yarn'
+echo '+++++++++++++++++++++'
+
+echo '----------------------------------------------------------------------'
+echo 'curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -'
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+echo '--------------------------------------------------------------------------------------------------'
+echo 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list'
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+echo '-------------------'
+echo 'sudo apt-get update'
+sudo apt-get update
+
+echo '----------------------------'
+echo 'sudo apt-get install -y yarn'
+sudo apt-get install -y yarn
+
+echo '++++++++++++++++++++++++'
+echo 'FINISHED installing yarn'
+echo '++++++++++++++++++++++++'
+
+echo '----------------------------'
+echo 'sudo apt-get purge -y nodejs'
+sudo apt-get purge -y nodejs
+
+echo '##############################'
+echo 'FINISHED $ABBREV-user2 actions'
+echo '##############################'
