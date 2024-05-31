@@ -74,5 +74,5 @@ echo 'sudo apt-get purge -y nodejs'
 sudo apt-get purge -y nodejs
 
 echo '##############################'
-echo 'FINISHED $ABBREV-user2 actions'
+echo "FINISHED $ABBREV-user2 actions"
 echo '##############################'
