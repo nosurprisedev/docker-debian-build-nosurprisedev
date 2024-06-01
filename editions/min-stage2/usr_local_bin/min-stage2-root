@@ -146,18 +146,31 @@ wait
 # https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian
 # https://www.graalvm.org/latest/reference-manual/ruby/UTF8Locale/
 wait
-sudo sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen
+sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen
 wait
 locale-gen
-export LANG=en_US.UTF-8
+export LC_ALL='en_US.UTF-8'
 wait
+echo ''
+echo '------'
+echo 'locale'
+locale
+echo ''
 echo '-----------------------------------------------'
 echo 'FINISHED: installing UTF-8 (needed for Ansible)'
 echo '-----------------------------------------------'
 wait
 
 # Install Ansible
+echo '---------------------------------'
+echo 'BEGIN: apt-get install -y ansible'
+echo '---------------------------------'
+wait
 apt-get install -y ansible
+wait
+echo '------------------------------------'
+echo 'FINISHED: apt-get install -y ansible'
+echo '------------------------------------'
 
 echo '#############################'
 echo "FINISHED $ABBREV-root actions"
