@@ -31,9 +31,9 @@ echo '-------'
 echo 'perl -v'
 perl -v
 
-# echo '-----------------'
-# echo 'ansible --version'
-# ansible --version
+echo '-----------------'
+echo 'ansible --version'
+ansible --version
 
 echo '--------------'
 echo 'heroku version'
