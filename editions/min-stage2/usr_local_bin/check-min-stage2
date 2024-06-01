@@ -31,9 +31,12 @@ echo '-------'
 echo 'perl -v'
 perl -v
 
-# echo '-----------------'
-# echo 'ansible --version'
-# ansible --version
+LANG=en_US.UTF-8 # Needed for Ansible
+wait
+
+echo '-----------------'
+echo 'ansible --version'
+ansible --version
 
 echo '--------------'
 echo 'heroku version'

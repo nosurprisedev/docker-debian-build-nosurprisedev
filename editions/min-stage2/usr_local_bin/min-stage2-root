@@ -136,7 +136,41 @@ apt-get install -y imagemagick # Needed for image parameters in Rails projects
 apt-get install -y libgtk-3-bin libgtkmm-3.0-dev libnotify-dev # Needed for the Rails server
 apt-get install -y libcurl4-openssl-dev libxml2-dev # Needed for the fog gem
 
-# Install Ansible and UTF8
+wait
+echo '--------------------------------------------'
+echo 'BEGIN: installing UTF-8 (needed for Ansible)'
+echo '--------------------------------------------'
+wait
+
+# Sources:
+# https://serverfault.com/questions/54591/how-to-install-change-locale-on-debian
+# https://www.graalvm.org/latest/reference-manual/ruby/UTF8Locale/
+wait
+sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen
+wait
+locale-gen
+export LC_ALL='en_US.UTF-8'
+wait
+echo ''
+echo '------'
+echo 'locale'
+locale
+echo ''
+echo '-----------------------------------------------'
+echo 'FINISHED: installing UTF-8 (needed for Ansible)'
+echo '-----------------------------------------------'
+wait
+
+# Install Ansible
+echo '---------------------------------'
+echo 'BEGIN: apt-get install -y ansible'
+echo '---------------------------------'
+wait
+apt-get install -y ansible
+wait
+echo '------------------------------------'
+echo 'FINISHED: apt-get install -y ansible'
+echo '------------------------------------'
 
 echo '#############################'
 echo "FINISHED $ABBREV-root actions"
