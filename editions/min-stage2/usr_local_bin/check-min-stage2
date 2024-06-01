@@ -31,6 +31,9 @@ echo '-------'
 echo 'perl -v'
 perl -v
 
+LANG=en_US.UTF-8 # Needed for Ansible
+wait
+
 echo '-----------------'
 echo 'ansible --version'
 ansible --version

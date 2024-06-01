@@ -8,6 +8,9 @@ echo '###########################'
 echo "BEGIN $ABBREV-user2 actions"
 echo '###########################'
 
+# Automatically run "LANG=en_US.UTF-8" at startup (needed for Ansible)
+echo 'export LANG=en_US.UTF-8' >> /home/`whoami`/.bashrc
+
 # BEGIN: activate NVM
 export NVM_DIR="/home/`whoami`/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
