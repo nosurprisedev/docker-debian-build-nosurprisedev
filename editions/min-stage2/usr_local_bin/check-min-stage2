@@ -31,7 +31,17 @@ echo '-------'
 echo 'perl -v'
 perl -v
 
-LANG=en_US.UTF-8 # Needed for Ansible
+echo '---------------'
+echo 'sudo locale-gen'
+sudo locale-gen
+wait
+
+export LC_ALL='en_US.UTF-8'
+wait
+
+echo '------'
+echo 'locale'
+locale
 wait
 
 echo '-----------------'

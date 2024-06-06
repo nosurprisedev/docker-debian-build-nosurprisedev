@@ -1,0 +1,57 @@
+#!/bin/bash
+
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+REGULAR_USER='<REGULAR_USER>'
+
+T_BEGIN=$(date +'%s')
+
+echo '--------------------'
+echo 'ls -l /usr/local/bin'
+ls -l /usr/local/bin
+
+# Prepare apt-get
+/usr/local/bin/aptget
+
+# Set environment variables to cut down on annoying warning messages
+export DEBIAN_FRONTEND='noninteractive'
+export DEBCONF_NOWARNINGS='true'
+export HOME=/root
+export LC_ALL=C
+
+echo '##########################'
+echo "BEGIN $ABBREV-root actions"
+echo '##########################'
+
+echo "/usr/local/bin/check-$ABBREV" >> /usr/local/bin/check
+
+echo '++++++++++++++++++++++++++++++++++++++++++'
+echo 'BEGIN installing RVM prerequisites as root'
+echo '++++++++++++++++++++++++++++++++++++++++++'
+
+# Needed for RVM itself:
+apt-get install -y curl gnupg2 procps
+
+# Needed to install Ruby versions in RVM
+apt-get install -y gawk autoconf automake bison libgdbm-dev libncurses5-dev \
+libtool libyaml-dev libgmp-dev libreadline-dev
+
+echo '+++++++++++++++++++++++++++++++++++++++++++++'
+echo 'FINISHED installing RVM prerequisites as root'
+echo '+++++++++++++++++++++++++++++++++++++++++++++'
+
+echo '#############################'
+echo "FINISHED $ABBREV-root actions"
+echo '#############################'
+
+su -c /usr/local/bin/$ABBREV-user $REGULAR_USER
+/usr/local/bin/finalize-root
+su -c /usr/local/bin/finalize-user $REGULAR_USER
+su -c /usr/local/bin/check $REGULAR_USER
+
+T_FINISH=$(date +'%s')
+T_ELAPSED=$(($T_FINISH-$T_BEGIN))
+echo '--------------------------------'
+echo 'Time to modify the Docker image:'
+echo "$(($T_ELAPSED / 60)) minutes and $(($T_ELAPSED % 60)) seconds"
