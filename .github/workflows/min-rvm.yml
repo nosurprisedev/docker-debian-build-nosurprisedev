@@ -1,0 +1,84 @@
+name: Build-min_rvm
+
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: '43 7 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        MATRIX_CODE_NAME: ['bookworm', 'trixie', 'sid']
+
+    # The name of the Docker image to be pushed must be set here.
+    # Relying on the tmp/bin/set-variables script caused the wrong images
+    # to be pushed during certain builds.
+    env:
+      CODE_NAME_CI: ${{ matrix.MATRIX_CODE_NAME }}
+      ABBREV_CI: min-rvm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the Docker image
+        run: bash $ABBREV_CI-$CODE_NAME_CI.sh
+
+      - name: Log in to the Docker container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      - name: Publish the Docker image
+        run: docker push ghcr.io/nosurprisedev/image-debian-$CODE_NAME_CI-$ABBREV_CI:latest
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # The next three jobs remove old instances of Docker images in the Docker image registry.
+      # Until I figure out how to get snok/container-retention-policy to recognize the
+      # environment variables set here, I must use three separate jobs.
+
+      # Delete old instances of image-debian-bookworm-min-rvm
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-debian-bookworm-min-rvm
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # Delete old instances of image-debian-trixie-min-rvm
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-debian-trixie-min-rvm
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      # Delete old instances of image-debian-sid-min-rvm
+      - name: Delete containers older than a day, keep at least 2
+        uses: snok/container-retention-policy@v2
+        with:
+          image-names: image-debian-sid-min-rvm
+          cut-off: A day ago UTC
+          account-type: org
+          org-name: nosurprisedev
+          keep-at-least: 2
+          token: ${{ secrets.SPECIAL_TOKEN }}
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
+
+      - name: Log out of the Docker container registry
+        run: docker logout ghcr.io
+        if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}

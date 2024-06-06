@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# NOTE: set -o pipefail is needed to ensure that any error or failure causes the whole pipeline to fail.
+# Without this specification, the CI status will provide a false sense of security by showing builds
+# as succeeding in spite of errors or failures.
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+
+# BEGIN: activate NVM
+export NVM_DIR="/home/`whoami`/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# END: activate NVM
+
+nvm use node # Activate Node
+
+echo '##########################'
+echo "BEGIN $ABBREV-user actions"
+echo '##########################'
+
+echo '------------------------------------------------------------------------------------------------------------------------------------'
+echo 'gpg --keyserver hkp://keys.openpgp.org --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB'
+gpg --keyserver hkp://keys.openpgp.org --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+
+echo '+++++++++++++++++++++'
+echo 'BEGIN: installing RVM'
+echo '+++++++++++++++++++++'
+
+echo '------------------------------------'
+echo '\curl -sSL https://get.rvm.io | bash'
+\curl -sSL https://get.rvm.io | bash
+
+echo '++++++++++++++++++++++++'
+echo 'FINISHED: installing RVM'
+echo '++++++++++++++++++++++++'
+
+source ~/.rvm/scripts/rvm # Activate RVM
+
+# BEGIN: activate RVM upon startup
+echo 'source ~/.rvm/scripts/rvm' >> /home/`whoami`/.bashrc
+# END: activate rbenv upon startup
+
+echo '--------------'
+echo 'rvm list known'
+rvm list known
+
+echo '-------------'
+echo 'rvm --version'
+rvm --version
+
+echo '#############################'
+echo "FINISHED $ABBREV-user actions"
+echo '#############################'

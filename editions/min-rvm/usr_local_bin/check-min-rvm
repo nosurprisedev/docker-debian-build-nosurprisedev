@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -eo pipefail
+
+ABBREV='<ABBREV>'
+
+# BEGIN: activate NVM
+export NVM_DIR="/home/`whoami`/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+# END: activate NVM
+
+nvm use node # Activate Node
+
+source ~/.rvm/scripts/rvm # Activate RVM
+
+echo '###########################'
+echo "BEGIN $ABBREV sanity checks"
+echo '###########################'
+
+echo '-------------'
+echo 'rvm --version'
+rvm --version
+
+echo '--------'
+echo 'rvm list'
+rvm list
+
+echo '##############################'
+echo "FINISHED $ABBREV sanity checks"
+echo '##############################'
