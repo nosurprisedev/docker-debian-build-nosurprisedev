@@ -1,10 +1,10 @@
-name: Build-min_stage2
+name: Build-min_rvm
 
 on:
   pull_request:
   push:
   schedule:
-    - cron: '23 7 * * *'
+    - cron: '43 7 * * *'
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
     # to be pushed during certain builds.
     env:
       CODE_NAME_CI: ${{ matrix.MATRIX_CODE_NAME }}
-      ABBREV_CI: min-stage2
+      ABBREV_CI: min-rvm
 
     steps:
       - uses: actions/checkout@v4
@@ -43,11 +43,11 @@ jobs:
       # Until I figure out how to get snok/container-retention-policy to recognize the
       # environment variables set here, I must use three separate jobs.
 
-      # Delete old instances of image-debian-bookworm-min-stage2
+      # Delete old instances of image-debian-bookworm-min-rvm
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-debian-bookworm-min-stage2
+          image-names: image-debian-bookworm-min-rvm
           cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
@@ -55,11 +55,11 @@ jobs:
           token: ${{ secrets.SPECIAL_TOKEN }}
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
-      # Delete old instances of image-debian-trixie-min-stage2
+      # Delete old instances of image-debian-trixie-min-rvm
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-debian-trixie-min-stage2
+          image-names: image-debian-trixie-min-rvm
           cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
@@ -67,11 +67,11 @@ jobs:
           token: ${{ secrets.SPECIAL_TOKEN }}
         if: ${{ (github.ref == 'refs/heads/main') && (github.repository_owner == 'nosurprisedev') }}
 
-      # Delete old instances of image-debian-sid-min-stage2
+      # Delete old instances of image-debian-sid-min-rvm
       - name: Delete containers older than a day, keep at least 2
         uses: snok/container-retention-policy@v2
         with:
-          image-names: image-debian-sid-min-stage2
+          image-names: image-debian-sid-min-rvm
           cut-off: A day ago UTC
           account-type: org
           org-name: nosurprisedev
