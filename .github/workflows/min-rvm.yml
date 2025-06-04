@@ -1,6 +1,7 @@
 name: Build-min_rvm
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
   schedule:
