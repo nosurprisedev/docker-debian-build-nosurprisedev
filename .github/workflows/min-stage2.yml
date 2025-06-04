@@ -1,6 +1,7 @@
 name: Build-min_stage2
 
 on:
+  workflow_dispatch:
   pull_request:
   push:
   schedule:
