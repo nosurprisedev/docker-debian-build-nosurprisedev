@@ -38,9 +38,9 @@ echo '+++++++++++++++++++++++++++++++++++++'
 echo 'BEGIN installing Heroku prerequisites'
 echo '+++++++++++++++++++++++++++++++++++++'
 
-echo '---------------------------------------------------------------------------------------------------------------'
-echo 'apt-get install -y git wget ca-certificates openssh-client software-properties-common apt-transport-https gnupg'
-apt-get install -y git wget ca-certificates openssh-client software-properties-common apt-transport-https gnupg
+echo '------------------------------------------------------------------------------------'
+echo 'apt-get install -y git wget ca-certificates openssh-client apt-transport-https gnupg'
+apt-get install -y git wget ca-certificates openssh-client apt-transport-https gnupg
 
 echo '++++++++++++++++++++++++++++++++++++++++'
 echo 'FINISHED installing Heroku prerequisites'
