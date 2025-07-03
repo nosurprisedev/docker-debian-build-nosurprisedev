@@ -48,10 +48,6 @@ echo '-----------------'
 echo 'ansible --version'
 ansible --version
 
-echo '--------------'
-echo 'heroku version'
-heroku version
-
 echo '-----------------'
 echo 'python3 --version'
 python3 --version
