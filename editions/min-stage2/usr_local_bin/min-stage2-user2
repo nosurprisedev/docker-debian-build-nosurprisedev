@@ -52,21 +52,21 @@ echo '+++++++++++++++++++++'
 echo 'BEGIN installing yarn'
 echo '+++++++++++++++++++++'
 
-echo '----------------------------------------------------------------------'
-echo 'curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -'
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo '-----------------------'
+echo 'npm install -g corepack'
+npm install -g corepack
 
-echo '--------------------------------------------------------------------------------------------------'
-echo 'echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list'
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+echo '------------'
+echo 'yarn init -2'
+yarn init -2
 
-echo '-------------------'
-echo 'sudo apt-get update'
-sudo apt-get update
+echo '-----------------------'
+echo 'yarn set version stable'
+yarn set version stable
 
-echo '----------------------------'
-echo 'sudo apt-get install -y yarn'
-sudo apt-get install -y yarn
+echo '------------'
+echo 'yarn install'
+yarn install
 
 echo '++++++++++++++++++++++++'
 echo 'FINISHED installing yarn'

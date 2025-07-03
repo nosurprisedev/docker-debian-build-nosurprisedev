@@ -34,37 +34,6 @@ echo '---------------------------------------'
 echo 'apt-get install -y curl ca-certificates'
 apt-get install -y curl ca-certificates
 
-echo '+++++++++++++++++++++++++++++++++++++'
-echo 'BEGIN installing Heroku prerequisites'
-echo '+++++++++++++++++++++++++++++++++++++'
-
-echo '---------------------------------------------------------------------------------------------------------------'
-echo 'apt-get install -y git wget ca-certificates openssh-client software-properties-common apt-transport-https gnupg'
-apt-get install -y git wget ca-certificates openssh-client software-properties-common apt-transport-https gnupg
-
-echo '++++++++++++++++++++++++++++++++++++++++'
-echo 'FINISHED installing Heroku prerequisites'
-echo '++++++++++++++++++++++++++++++++++++++++'
-
-echo '+++++++++++++++++++++++'
-echo 'BEGIN installing Heroku'
-echo '+++++++++++++++++++++++'
-
-echo 'Downloading Heroku to /usr/local/lib'
-cd /usr/local/lib
-curl https://cli-assets.heroku.com/heroku-linux-x64.tar.gz | tar xz
-
-echo 'ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku'
-ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-
-echo '--------------'
-echo 'heroku version'
-su -c 'heroku version' $REGULAR_USER
-
-echo '++++++++++++++++++++++++++'
-echo 'FINISHED installing Heroku'
-echo '++++++++++++++++++++++++++'
-
 # Needed for NVM
 echo '---------------------------------------------------------------------------'
 echo 'apt-get install -y build-essential libssl-dev curl wget git ca-certificates'
